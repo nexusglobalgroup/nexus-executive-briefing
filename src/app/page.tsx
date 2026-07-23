@@ -152,6 +152,7 @@ export default function Home() {
 
   async function generateImages(next: ExecutiveBriefing) {
     const articles = [...next.articles];
+    const accessCode = sessionStorage.getItem("nexus-access-code") ?? "";
 
     for (let index = 0; index < articles.length; index += 1) {
       const article = articles[index];
@@ -159,7 +160,10 @@ export default function Home() {
 
       const response = await fetch("/api/image", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "x-nexus-access-code": accessCode
+        },
         body: JSON.stringify({
           headline: article.headline,
           imagePrompt: article.imagePrompt,
@@ -177,17 +181,33 @@ export default function Home() {
   }
 
   async function generateBriefing() {
+    const savedCode = sessionStorage.getItem("nexus-access-code");
+    const accessCode =
+      savedCode ??
+      window.prompt(
+        "Digite o código administrativo Nexus para gerar uma nova edição:"
+      );
+
+    if (!accessCode) return;
+    sessionStorage.setItem("nexus-access-code", accessCode);
+
     setGenerating(true);
     setError(null);
     setImageProgress([]);
 
     try {
-      const response = await fetch("/api/briefing", { method: "POST" });
+      const response = await fetch("/api/briefing", {
+        method: "POST",
+        headers: { "x-nexus-access-code": accessCode }
+      });
       const payload = (await response.json()) as
         | ExecutiveBriefing
         | { error: string };
 
       if (!response.ok || "error" in payload) {
+        if (response.status === 401) {
+          sessionStorage.removeItem("nexus-access-code");
+        }
         throw new Error("error" in payload ? payload.error : "Falha na geração.");
       }
 
