@@ -10,6 +10,12 @@ type RequestBody = {
   division?: Division;
 };
 
+function isAuthorized(request: Request) {
+  const expected = process.env.NEXUS_ACCESS_CODE;
+  const received = request.headers.get("x-nexus-access-code");
+  return Boolean(expected && received && received === expected);
+}
+
 function brandPrompt(
   headline: string,
   imagePrompt: string,
@@ -41,6 +47,13 @@ clutter, dominant warm tones, bevels, glow and 3D branding.
 }
 
 export async function POST(request: Request) {
+  if (!isAuthorized(request)) {
+    return Response.json(
+      { error: "Acesso administrativo não autorizado." },
+      { status: 401 }
+    );
+  }
+
   if (!process.env.OPENAI_API_KEY) {
     return Response.json(
       { error: "OPENAI_API_KEY não configurada." },
