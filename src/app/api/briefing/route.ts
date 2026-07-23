@@ -4,6 +4,12 @@ import type { ExecutiveBriefing } from "@/lib/types";
 export const runtime = "nodejs";
 export const maxDuration = 300;
 
+function isAuthorized(request: Request) {
+  const expected = process.env.NEXUS_ACCESS_CODE;
+  const received = request.headers.get("x-nexus-access-code");
+  return Boolean(expected && received && received === expected);
+}
+
 const SYSTEM_PROMPT = `
 Você é o núcleo de inteligência executiva da Nexus Global Group.
 Pesquise notícias novas em cada execução, priorizando as últimas 24 horas e ampliando para 72 horas somente quando necessário.
@@ -57,7 +63,14 @@ function parseJson(text: string): ExecutiveBriefing {
   return parsed;
 }
 
-export async function POST() {
+export async function POST(request: Request) {
+  if (!isAuthorized(request)) {
+    return Response.json(
+      { error: "Acesso administrativo não autorizado." },
+      { status: 401 }
+    );
+  }
+
   if (!process.env.OPENAI_API_KEY) {
     return Response.json(
       { error: "OPENAI_API_KEY não configurada." },
