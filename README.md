@@ -14,10 +14,13 @@ Portal executivo diário da Nexus Global Group, com três pautas para Nexus Glob
 
 1. Copie `.env.example` para `.env.local`.
 2. Defina `OPENAI_API_KEY` apenas no arquivo local.
-3. Instale as dependências com `npm install`.
-4. Execute `npm run dev`.
+3. Defina `NEXUS_ACCESS_CODE` para proteger as rotas que geram custos.
+4. Instale as dependências com `npm install`.
+5. Execute `npm run dev`.
 
-O arquivo `.env.local` é ignorado pelo Git e nunca deve ser publicado.
+O arquivo `.env.local` é ignorado pelo Git e nunca deve ser publicado. O código
+administrativo é solicitado no navegador somente quando uma nova edição é gerada
+e permanece na sessão atual.
 
 ## Segurança editorial
 
