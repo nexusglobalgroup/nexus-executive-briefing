@@ -1,31 +1,27 @@
 import type { Metadata } from "next";
-import { Montserrat, Open_Sans } from "next/font/google";
+import Nav from "@/components/Nav";
 import "./globals.css";
 
-const montserrat = Montserrat({
-  variable: "--font-heading",
-  subsets: ["latin"],
-  display: "swap"
-});
-
-const openSans = Open_Sans({
-  variable: "--font-body",
-  subsets: ["latin"],
-  display: "swap"
-});
-
 export const metadata: Metadata = {
-  title: "Nexus Executive Briefing",
+  title: "Nexus Global Group — Inteligência Executiva",
   description:
-    "Inteligência executiva diária para Nexus Global Aviation e Nexus Global Education."
+    "Plataforma de inteligência executiva para Nexus Global Aviation e Nexus Global Education."
 };
 
 export default function RootLayout({
   children
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="pt-BR" className={`${montserrat.variable} ${openSans.variable}`}>
-      <body>{children}</body>
+    <html lang="pt-BR">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+      </head>
+      <body>
+        <Nav />
+        {children}
+      </body>
     </html>
   );
 }
