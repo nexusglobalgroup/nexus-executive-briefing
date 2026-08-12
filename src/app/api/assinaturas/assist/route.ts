@@ -26,8 +26,7 @@ const schema = {
     rationale: { type: "string" },
     cautions: {
       type: "array",
-      items: { type: "string" },
-      maxItems: 4
+      items: { type: "string" }
     }
   },
   required: ["suggestedTitle", "functionalMailbox", "rationale", "cautions"]
@@ -54,7 +53,7 @@ export async function POST(request: Request) {
         {
           role: "system",
           content:
-            "Você revisa nomenclaturas de assinaturas institucionais para uma organização de aviação brasileira. Preserve rigor regulatório e corporativo. Não declare que uma pessoa está aprovada, homologada ou aceita pela ANAC. Não transforme função de apoio em cargo requerido. Não invente razão social, CNPJ, habilitação, designação ou base normativa. Produza português do Brasil objetivo."
+            "Você revisa nomenclaturas de assinaturas institucionais para uma organização de aviação brasileira. Preserve rigor regulatório e corporativo. Não declare que uma pessoa está aprovada, homologada ou aceita pela ANAC. Não transforme função de apoio em cargo requerido. Não invente razão social, CNPJ, habilitação, designação ou base normativa. Produza português do Brasil objetivo. Liste no máximo 4 itens em \"cautions\"."
         },
         {
           role: "user",
