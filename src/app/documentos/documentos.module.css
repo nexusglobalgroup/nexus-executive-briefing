@@ -1,0 +1,264 @@
+.page {
+  min-height: 100vh;
+  background: #f3f5f8;
+  color: #182947;
+}
+
+.topbar {
+  min-height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 0 6vw;
+  background: #182947;
+  color: #fff;
+  font-size: 0.76rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 32px;
+  align-items: end;
+  padding: 76px 7vw 66px;
+  background: linear-gradient(135deg, #182947 0%, #1d415c 72%, #244c66 100%);
+  color: #fff;
+  border-bottom: 5px solid #f39700;
+}
+
+.hero svg {
+  color: #f3de00;
+}
+
+.kicker {
+  display: block;
+  margin-bottom: 12px;
+  color: #f3de00;
+  font-weight: 800;
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.hero h1 {
+  margin: 0;
+  max-width: 820px;
+  font-size: clamp(2.2rem, 5vw, 4.5rem);
+  line-height: 0.98;
+  letter-spacing: -0.045em;
+}
+
+.hero p {
+  max-width: 780px;
+  margin: 24px 0 0;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 1.04rem;
+  line-height: 1.7;
+}
+
+.boundary {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  max-width: 1180px;
+  margin: 36px auto 0;
+  padding: 18px 22px;
+  background: #fff7e6;
+  border: 1px solid rgba(243, 151, 0, 0.32);
+  border-left: 4px solid #f39700;
+}
+
+.boundary svg {
+  flex: 0 0 auto;
+  color: #f39700;
+  margin-top: 2px;
+}
+
+.boundary p {
+  margin: 0;
+  color: #4b5868;
+  line-height: 1.55;
+}
+
+.error {
+  max-width: 1180px;
+  margin: 22px auto 0;
+  padding: 14px 18px;
+  color: #8d2424;
+  background: #fff1f1;
+  border: 1px solid #efbcbc;
+  font-weight: 700;
+}
+
+.grid {
+  max-width: 1180px;
+  margin: 28px auto 72px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  min-height: 440px;
+  padding: 26px;
+  background: #fff;
+  border: 1px solid #dfe5eb;
+  box-shadow: 0 18px 42px rgba(24, 41, 71, 0.08);
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 34px;
+  color: #1d415c;
+}
+
+.number {
+  font-size: 2.4rem;
+  font-weight: 800;
+  letter-spacing: -0.05em;
+  color: #e8edf1;
+}
+
+.classification {
+  color: #f39700;
+  font-size: 0.71rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1.5;
+}
+
+.card h2 {
+  margin: 12px 0 10px;
+  font-size: 1.48rem;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+}
+
+.subtitle {
+  margin: 0 0 18px;
+  color: #617084;
+  line-height: 1.55;
+}
+
+.status {
+  margin: 4px 0 18px;
+  padding: 10px 12px;
+  background: #edf2f6;
+  color: #1d415c;
+  font-size: 0.78rem;
+  font-weight: 800;
+  line-height: 1.45;
+}
+
+.sourceNote {
+  flex: 1;
+  margin: 0 0 22px;
+  color: #728095;
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+.card button {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  border: 0;
+  padding: 13px 16px;
+  background: #182947;
+  color: #fff;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.card button:hover:not(:disabled) {
+  background: #1d415c;
+}
+
+.card button:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+.spin {
+  animation: spin 0.8s linear infinite;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 22px;
+  padding: 28px 7vw;
+  background: #101c31;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.8rem;
+}
+
+.footer strong {
+  color: #fff;
+  letter-spacing: 0.06em;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 920px) {
+  .grid {
+    grid-template-columns: 1fr;
+    margin-left: 6vw;
+    margin-right: 6vw;
+  }
+
+  .boundary {
+    margin-left: 6vw;
+    margin-right: 6vw;
+  }
+}
+
+@media (max-width: 640px) {
+  .topbar {
+    align-items: flex-start;
+    flex-direction: column;
+    padding-top: 18px;
+    padding-bottom: 18px;
+  }
+
+  .hero {
+    grid-template-columns: 1fr;
+    padding-top: 52px;
+  }
+
+  .hero svg {
+    display: none;
+  }
+
+  .card {
+    min-height: 0;
+  }
+
+  .footer {
+    flex-direction: column;
+  }
+}
