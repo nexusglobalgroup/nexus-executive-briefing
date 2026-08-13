@@ -88,35 +88,47 @@ export default function NavigationDashboard() {
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
+    let savedConcepts: Record<string, ConceptProgress> | null = null;
+    let savedRoute: Record<string, boolean> | null = null;
+
     try {
       const stored = window.localStorage.getItem(storageKey);
       if (stored) {
         const parsed = JSON.parse(stored) as StoredProgress;
         if (parsed.concepts) {
-          setConceptProgress((current) => {
-            const next = { ...current };
-            for (const concept of navigationConcepts) {
-              const saved = parsed.concepts?.[concept.id];
-              if (saved && isStudyStatus(saved.status)) {
-                next[concept.id] = {
-                  status: saved.status,
-                  revision1: Boolean(saved.revision1),
-                  revision2: Boolean(saved.revision2),
-                };
-              }
+          const next = initialConceptProgress();
+          for (const concept of navigationConcepts) {
+            const saved = parsed.concepts[concept.id];
+            if (saved && isStudyStatus(saved.status)) {
+              next[concept.id] = {
+                status: saved.status,
+                revision1: Boolean(saved.revision1),
+                revision2: Boolean(saved.revision2),
+              };
             }
-            return next;
-          });
+          }
+          savedConcepts = next;
         }
         if (parsed.route) {
-          setRouteProgress((current) => ({ ...current, ...parsed.route }));
+          const next = initialRouteProgress();
+          for (const step of navigationRoute) {
+            next[step.step] = Boolean(parsed.route[step.step]);
+          }
+          savedRoute = next;
         }
       }
     } catch {
       window.localStorage.removeItem(storageKey);
-    } finally {
-      setHydrated(true);
     }
+
+    const frame = window.requestAnimationFrame(() => {
+      if (savedConcepts) setConceptProgress(savedConcepts);
+      if (savedRoute) setRouteProgress(savedRoute);
+      setHydrated(true);
+
+    });
+
+    return () => window.cancelAnimationFrame(frame);
   }, []);
 
   useEffect(() => {
